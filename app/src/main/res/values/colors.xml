@@ -9,5 +9,6 @@
     <color name="colorGrey">#90A4AE</color>
     <color name="colorPeach">#FF9E80</color>
     <color name="colorSeaGreenDark">#009688</color>
-    <color name="colorAccent">#7E57C2</color>
+    <color name="colorAccent">#212121</color>
+    <color name="colorPurple">#9575CD</color>
 </resources>

@@ -155,7 +155,7 @@ public class CashFragment extends Fragment implements View.OnClickListener {
                 }
                 Log.d(TAG, "read: "+s+" "+s1+" "+s2);
                 Uri path=Uri.parse(s2);
-                newList.add(new Cash(s1,s,path));
+                newList.add(new Cash(s,s1,path));
                 line = reader.readLine();
             }
 
@@ -188,7 +188,7 @@ public class CashFragment extends Fragment implements View.OnClickListener {
                             try {
                                 Log.d(TAG, "onGranted: file has permission to read");
                                 cashList = read(file);
-                                cashListAdapter.notifyDataSetChanged();
+                                cashListAdapter.updateCashList(cashList);
 
                             } catch (IOException e) {
                                 e.printStackTrace();

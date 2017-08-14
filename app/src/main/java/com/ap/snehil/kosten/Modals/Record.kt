@@ -1,0 +1,10 @@
+package com.ap.snehil.kosten.Modals
+
+/**
+ * Created by HP on 14-08-2017.
+ */
+data class Record(
+
+        val name:String,
+        val amount:String
+)

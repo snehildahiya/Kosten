@@ -1,6 +1,9 @@
 package com.ap.snehil.kosten.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.ap.snehil.kosten.Modals.Cash;
 import com.ap.snehil.kosten.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -30,6 +34,11 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.cashVi
         this.context = context;
         this.cash = cash;
     }
+    public void updateCashList(ArrayList<Cash> newcashList) {
+        Log.d(TAG, "updatePost: ");
+        this.cash = newcashList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public cashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +56,13 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.cashVi
         final Cash thisCash = cash.get(position);
         holder.tvCost.setText(thisCash.getCost());
         holder.tvDate.setText(thisCash.getDate());
-        holder.ivReceipt.setImageURI(thisCash.getPath());
+       // Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),thisCash.getPath());
+        //holder.ivReceipt.setImageBitmap();
+        Bitmap bitmap = BitmapFactory.decodeFile(thisCash.getPath().getPath());
+        holder.ivReceipt.setImageBitmap(bitmap);
+//        Picasso pico=Picasso.with(context);
+//        pico.load(thisCash.getPath()).fit().into(holder.ivReceipt);
+//        pico.isLoggingEnabled();
          }
 
 
