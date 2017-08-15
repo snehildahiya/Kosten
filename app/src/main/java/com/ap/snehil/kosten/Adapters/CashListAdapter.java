@@ -16,6 +16,7 @@ import com.ap.snehil.kosten.Modals.Cash;
 import com.ap.snehil.kosten.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static com.ap.snehil.kosten.R.id.parent;
@@ -56,13 +57,8 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.cashVi
         final Cash thisCash = cash.get(position);
         holder.tvCost.setText(thisCash.getCost());
         holder.tvDate.setText(thisCash.getDate());
-       // Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),thisCash.getPath());
-        //holder.ivReceipt.setImageBitmap();
-        Bitmap bitmap = BitmapFactory.decodeFile(thisCash.getPath().getPath());
-        holder.ivReceipt.setImageBitmap(bitmap);
-//        Picasso pico=Picasso.with(context);
-//        pico.load(thisCash.getPath()).fit().into(holder.ivReceipt);
-//        pico.isLoggingEnabled();
+       Picasso.with(context).load(new File(thisCash.getPath().getPath()))
+               .resize(80,80).into(holder.ivReceipt);
          }
 
 

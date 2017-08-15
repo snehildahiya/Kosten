@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 
 public class GetListAdapter extends RecyclerView.Adapter<GetListAdapter.GetViewHolder>{
-    public static final String TAG="OweListAdapter";
+    public static final String TAG="GetListAdapter";
     Context context;
     ArrayList<Record> record;
 
@@ -29,6 +29,7 @@ public class GetListAdapter extends RecyclerView.Adapter<GetListAdapter.GetViewH
         this.record = record;
     }
     public void updateGetList(ArrayList<Record> newrecordList) {
+        Log.d(TAG, "updateGetList: **************************");
         this.record= newrecordList;
         notifyDataSetChanged();
     }

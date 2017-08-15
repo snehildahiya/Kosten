@@ -73,6 +73,8 @@ View rootView;
         getListAdapter = new GetListAdapter(getActivity(),GetList);
         rvOweList.setLayoutManager(oLayoutManager);
         rvGetList.setLayoutManager(gLayoutManager);
+        rvOweList.setAdapter(oweListAdapter);
+        rvGetList.setAdapter(getListAdapter);
         btnAddToOweList.setOnClickListener(this);
         btnAddToGetList.setOnClickListener(this);
 
@@ -162,7 +164,8 @@ View rootView;
         PermissionManager.askForPermission(getActivity(),
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_SMS
                 }, new PermissionManager.OnPermissionResultListener() {
                     @Override
                     public void onGranted(String permission) {
@@ -171,10 +174,12 @@ View rootView;
                             try {
                                 if(x==1){
                                     OweList = read(file);
+                                    Log.d(TAG, "onGranted: "+OweList);
                                     oweListAdapter.updateOweList(OweList);
                                 }
                                 if(x==0) {
                                     GetList = read(file);
+                                    Log.d(TAG, "onGranted: "+GetList);
                                     getListAdapter.updateGetList(GetList);
                                 }
                             } catch (IOException e) {
@@ -203,10 +208,11 @@ View rootView;
         writer2.newLine();
         writer2.close();
         if(x==0){
-            readDataFromFile(new File(sdcard, "owelistfile.txt"),1);
+            readDataFromFile(new File(sdcard, "getlistfile.txt"),0);
+
         }
         if(x==1){
-            readDataFromFile(new File(sdcard, "getlistfile.txt"),0);
+            readDataFromFile(new File(sdcard, "owelistfile.txt"),1);
         }
 
 
@@ -216,7 +222,8 @@ View rootView;
         PermissionManager.askForPermission(getActivity(),
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_SMS
                 }, new PermissionManager.OnPermissionResultListener() {
                     @Override
                     public void onGranted(String permission) {

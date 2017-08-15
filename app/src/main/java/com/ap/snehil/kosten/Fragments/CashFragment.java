@@ -81,16 +81,21 @@ public class CashFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
+int UploadImage =0;
     @Override
     public void onClick(View v) {
              switch (v.getId()){
                  case R.id.btnUploadImg:
                      AddImage();
+                     UploadImage=1;
                      break;
                  case R.id.btnAddToList:
-                     writeDataToFile(file,etCost.getText().toString(),etDate.getText().toString(),path.toString());
-
+                     if(UploadImage==1) {
+                         writeDataToFile(file, etCost.getText().toString(), etDate.getText().toString(), path.toString());
+                     }
+                     else{
+                         Toast.makeText(getActivity(), "First upload Image", Toast.LENGTH_LONG).show();
+                     }
                      break;
                  case R.id.btnViewList:
                      readDataFromFile(new File(sdcard, "cashlistfile.txt"));
@@ -179,7 +184,8 @@ public class CashFragment extends Fragment implements View.OnClickListener {
         PermissionManager.askForPermission(getActivity(),
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_SMS
                 }, new PermissionManager.OnPermissionResultListener() {
                     @Override
                     public void onGranted(String permission) {
@@ -225,7 +231,8 @@ public class CashFragment extends Fragment implements View.OnClickListener {
         PermissionManager.askForPermission(getActivity(),
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_SMS
                 }, new PermissionManager.OnPermissionResultListener() {
                     @Override
                     public void onGranted(String permission) {
