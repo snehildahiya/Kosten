@@ -10,34 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorSeaGreen"
-                app:srcCompat="@drawable/cashless" />
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorSeaGreenDark"
-                app:srcCompat="@drawable/cash" />
-
-            <ImageButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorSeaGreen"
-                app:srcCompat="@drawable/people" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
