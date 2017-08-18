@@ -6,5 +6,8 @@ package com.ap.snehil.kosten.Modals
 data class Record(
 
         val name:String,
-        val amount:String
+        val date:String,
+        val reason:String,
+        val given:Int,
+        val taken:Int
 )

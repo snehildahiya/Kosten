@@ -23,8 +23,8 @@ public  MoneyExchangeRecords(Context context){
                 + MoneyEntry.COLUMN_PERSON_NAME + " TEXT NOT NULL, "
                 + MoneyEntry.COLUMN__DATE + " TEXT, "
                 + MoneyEntry.COLUMN__REASON + " TEXT, "
-                + MoneyEntry.COLUMN_AMOUNT_BORROWED + " INTEGER NOT NULL, "
-                + MoneyEntry.COLUMN_AMOUNT_GIVEN+ " INTEGER NOT NULL );";
+                + MoneyEntry.COLUMN_AMOUNT_BORROWED + " TEXT, "
+                + MoneyEntry.COLUMN_AMOUNT_GIVEN+ " TEXT );";
        db.execSQL(SQL_MONEY_TABLE);
     }
 

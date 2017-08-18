@@ -35,11 +35,9 @@ public class SMSReader extends BroadcastReceiver {
         try {
 
             if (bundle != null) {
-                String[] phoneNumber = new String[] { "+919205006913" };
-
                 Log.d(TAG, "onCreateView: reading sms");
-                Cursor c= context.getContentResolver().query(Uri.parse("content://sms/inbox"), null, "address=?" ,phoneNumber,null);
-                // Cursor c = context.getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
+               // Cursor c= context.getContentResolver().query(Uri.parse("content://sms/inbox"), null, "address=?" ,phoneNumber,null);
+                Cursor c = context.getContentResolver().query(Uri.parse("content://sms/inbox"), null, null, null, null);
                 c.moveToFirst();
                 int value = 0;
                 if (c.getString(c.getColumnIndexOrThrow("body")).contains("Thank you for using your SBI Debit Card")) {

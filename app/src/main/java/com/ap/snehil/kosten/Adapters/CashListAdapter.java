@@ -57,9 +57,17 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.cashVi
         final Cash thisCash = cash.get(position);
         holder.tvCost.setText(thisCash.getCost());
         holder.tvDate.setText(thisCash.getDate());
-       Picasso.with(context).load(new File(thisCash.getPath().getPath()))
-               .resize(80,80).into(holder.ivReceipt);
-         }
+        Log.i(TAG, "onBindViewHolder: imageURI "+thisCash.getPath().getPath());
+        String filePath =thisCash.getPath().getPath();
+        Log.i(TAG, "onBindViewHolder: filePath "+filePath);
+        File file = new File(filePath);
+        Log.i(TAG, "onBindViewHolder: File "+file);
+        Picasso.with(context)
+                .load(file)
+                .resize(80,80)
+                .error(R.mipmap.ic_launcher_round)
+                .into(holder.ivReceipt);
+    }
 
 
     @Override

@@ -15,7 +15,7 @@ public class MoneyContract {
         public final static String COLUMN_PERSON_NAME ="Name";
         public final static String COLUMN__DATE ="Date";
         public final static String COLUMN__REASON="Reason";
-        public final static String COLUMN_AMOUNT_BORROWED="Borrowed Amount";
-        public final static String COLUMN_AMOUNT_GIVEN="Amount Lended";
+        public final static String COLUMN_AMOUNT_BORROWED ="Borrowed_Amount";
+        public final static String COLUMN_AMOUNT_GIVEN ="Amount_Lend";
     }
 }

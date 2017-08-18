@@ -3,7 +3,9 @@ package com.ap.snehil.kosten.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -91,7 +93,11 @@ int UploadImage =0;
                      break;
                  case R.id.btnAddToList:
                      if(UploadImage==1) {
-                         writeDataToFile(file, etCost.getText().toString(), etDate.getText().toString(), path.toString());
+                         Uri ImageFileUri = Uri.parse(getPath(getContext(),path));
+                         Log.i(TAG, "onClick: imagefileURI"+ImageFileUri.toString());
+
+                         writeDataToFile(file, etCost.getText().toString(), etDate.getText().toString(), ImageFileUri.toString());
+
                      }
                      else{
                          Toast.makeText(getActivity(), "First upload Image", Toast.LENGTH_LONG).show();
@@ -116,7 +122,7 @@ int UploadImage =0;
             reader = new BufferedReader(new InputStreamReader(fis));
             String line = reader.readLine();
             while(line != null){
-                String s=" ",s1=" ",s2=" ";
+                String s ="",s1="",s2="";
                 int x=0;
                 for(int i=0;i<line.length();i++)
                 {
@@ -270,5 +276,20 @@ int UploadImage =0;
         }
     }
 
+    public String getPath(Context context, Uri uri) {
+        Cursor cursor=null;
+        try {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            cursor = context.getContentResolver().query(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        }
 
+        finally {
+            if(cursor != null){
+                cursor.close();
+            }
+        }
+    }
 }

@@ -95,17 +95,6 @@ public class MainActivity extends AppCompatActivity implements android.support.v
             }
 
 
-//        if (f == null) {
-//            tf = new TabFragment();
-//            Bundle data = new Bundle();
-//            data.putInt("idx",  tab.getPosition());
-//            tf.setArguments(data);
-//            fragList.add(tf);
-//        }
-//        else
-//            tf = (TabFragment) f;
-
-            // ft.replace(android.R.id.content, tf);
         }
     }
 
