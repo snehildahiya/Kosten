@@ -3,6 +3,7 @@ package com.ap.snehil.kosten.Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -58,12 +59,12 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.cashVi
         holder.tvCost.setText(thisCash.getCost());
         holder.tvDate.setText(thisCash.getDate());
         Log.i(TAG, "onBindViewHolder: imageURI "+thisCash.getPath().getPath());
-        String filePath =thisCash.getPath().getPath();
-        Log.i(TAG, "onBindViewHolder: filePath "+filePath);
-        File file = new File(filePath);
-        Log.i(TAG, "onBindViewHolder: File "+file);
+        String filePath ="file://"+thisCash.getPath().getPath();
+        //Log.i(TAG, "onBindViewHolder: filePath "+filePath);
+       Uri fileUri=Uri.parse(filePath);
+       // Log.i(TAG, "onBindViewHolder: File "+file);
         Picasso.with(context)
-                .load(file)
+                .load(fileUri)
                 .resize(80,80)
                 .error(R.mipmap.ic_launcher_round)
                 .into(holder.ivReceipt);

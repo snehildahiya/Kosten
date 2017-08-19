@@ -8,6 +8,6 @@ data class Record(
         val name:String,
         val date:String,
         val reason:String,
-        val given:Int,
-        val taken:Int
+        val given:String,
+        val taken:String
 )

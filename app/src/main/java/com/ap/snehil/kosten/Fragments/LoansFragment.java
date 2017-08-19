@@ -34,12 +34,12 @@ import java.util.ArrayList;
 public class LoansFragment extends Fragment{
     //public class LoansFragment extends Fragment implements View.OnClickListener{
 View rootView;
+    TextView tvOwe,tvGet;
     RecyclerView rvBalanceList;
     BalanceListAdapter balanceListAdapter;
     LinearLayoutManager bLayoutManager;
     ArrayList<Record> BalanceList = new ArrayList<>();
     public static final String TAG="Loan Fragment";
-    TextView displayView;
     MoneyExchangeRecords moneyExchangeRecords;
     public LoansFragment() {
         // Required empty public constructor
@@ -50,8 +50,9 @@ View rootView;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.fragment_loans, container, false);
-        displayView= (TextView) rootView.findViewById(R.id.tvDisplay);
        rvBalanceList=(RecyclerView)rootView.findViewById(R.id.rvBalaListList);
+        tvOwe=(TextView) rootView.findViewById(R.id.tvOwe);
+        tvGet=(TextView) rootView.findViewById(R.id.tvGet);
         bLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,true);
         rvBalanceList.setLayoutManager(new LinearLayoutManager(getActivity()));
         balanceListAdapter = new BalanceListAdapter(getActivity(),BalanceList);
@@ -62,7 +63,7 @@ View rootView;
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), EditorActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -104,27 +105,65 @@ View rootView;
 
 
     private void displayDatabaseInfo() {
+        int owe=0,get=0;
 // To access our database, we instantiate our subclass of SQLiteOpenHelper
-// and pass the context, which is the current activity.
-        MoneyExchangeRecords moneyExchangeRecords = new MoneyExchangeRecords(getActivity());
-
+// and pass the context, which is the current activity
+        ArrayList<Record> newBalanceList = new ArrayList<>();
         // Create and/or open a database to read from it
         SQLiteDatabase db = moneyExchangeRecords.getReadableDatabase();
 
         // Perform this raw SQL query "SELECT * FROM pets"
         // to get a Cursor that contains all rows from the pets table.
-        Cursor cursor = db.rawQuery("SELECT * FROM " + MoneyContract.MoneyEntry.TABLE_NAME, null);
-
+        //Cursor cursor = db.rawQuery("SELECT * FROM " + MoneyContract.MoneyEntry.TABLE_NAME, null);
+        Cursor cursor = db.query(
+                MoneyContract.MoneyEntry.TABLE_NAME,   // The table to query
+                null,            // The columns to return
+                null,                  // The columns for the WHERE clause
+                null,                  // The values for the WHERE clause
+                null,                  // Don't group the rows
+                null,                  // Don't filter by row groups
+                null);
         Log.d("get", String.valueOf(cursor.getCount()));
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
-            displayView.setText("Number of rows in pets database table: " + String.valueOf(cursor.getCount()));
+            //displayView.setText("Number of rows in pets database table: " + String.valueOf(cursor.getCount()));
+
+            int nameColumnIndex = cursor.getColumnIndex(MoneyContract.MoneyEntry.COLUMN_PERSON_NAME);
+            int dateColumnIndex = cursor.getColumnIndex(MoneyContract.MoneyEntry.COLUMN__DATE);
+            int reasonColumnIndex = cursor.getColumnIndex(MoneyContract.MoneyEntry.COLUMN__REASON);
+            int givenColumnIndex = cursor.getColumnIndex(MoneyContract.MoneyEntry.COLUMN_AMOUNT_GIVEN);
+            int takenColumnIndex = cursor.getColumnIndex(MoneyContract.MoneyEntry.COLUMN_AMOUNT_BORROWED);
+
+            while (cursor.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                String currentReason = cursor.getString(reasonColumnIndex);
+                String currentName = cursor.getString(nameColumnIndex);
+                String currentDate = cursor.getString(dateColumnIndex);
+                String currentGiven = cursor.getString(givenColumnIndex);
+                String currentTaken = cursor.getString(takenColumnIndex);
+                owe=owe+Integer.valueOf(currentTaken);
+                get=get+Integer.valueOf(currentGiven);
+                // Display the values from each column of the current row in the cursor in the TextView
+             newBalanceList.add(new Record(currentName,currentDate,currentReason,currentGiven,currentTaken));
+
+            }
+            BalanceList=newBalanceList;
+           tvOwe.setText(String.valueOf(owe));
+            tvGet.setText(String.valueOf(get));
+            balanceListAdapter.updateOweList(BalanceList);
+
         } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
+            // Always close the cursor when you're done reading from it. This releases all i
             // resources and makes it invalid.*/
             cursor.close();
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        displayDatabaseInfo();
+    }
 }
