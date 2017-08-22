@@ -65,7 +65,7 @@ public class CashListAdapter extends RecyclerView.Adapter<CashListAdapter.cashVi
        // Log.i(TAG, "onBindViewHolder: File "+file);
         Picasso.with(context)
                 .load(fileUri)
-                .resize(80,80)
+                .resize(150,150)
                 .error(R.mipmap.ic_launcher_round)
                 .into(holder.ivReceipt);
     }

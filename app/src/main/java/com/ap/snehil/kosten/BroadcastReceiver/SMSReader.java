@@ -1,15 +1,21 @@
 package com.ap.snehil.kosten.BroadcastReceiver;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ap.snehil.kosten.Database.CashlessContract;
+import com.ap.snehil.kosten.Database.CashlessDb;
+import com.ap.snehil.kosten.Database.MoneyContract;
+import com.ap.snehil.kosten.Database.MoneyExchangeRecords;
 import com.ap.snehil.kosten.Fragments.CashlessFragment;
 
 import java.util.Calendar;
@@ -20,6 +26,7 @@ import java.util.Date;
  */
 
 public class SMSReader extends BroadcastReceiver {
+    CashlessDb cashlessDb;
 
     // SmsManager class is responsible for all SMS related actions
     final SmsManager sms = SmsManager.getDefault();
@@ -65,7 +72,14 @@ public class SMSReader extends BroadcastReceiver {
                     String smsDate = finaldate.toString();
                     Toast.makeText(context, "SMS RECEIVED:", Toast.LENGTH_LONG).show();
                     c.close();
-                   CashlessFragment.GetIncomingMessage(smsDate,y);
+                    cashlessDb = new CashlessDb(context);
+
+
+                    SQLiteDatabase db = cashlessDb.getReadableDatabase();
+                    ContentValues values = new ContentValues();
+                    values.put(CashlessContract.CashlessEntry.COLUMN__DATE, smsDate);
+                    values.put(CashlessContract.CashlessEntry.COLUMN_EXPENDITURE, y);
+                    db.insert(CashlessContract.CashlessEntry.TABLE_NAME, null, values);
 
                 }
 

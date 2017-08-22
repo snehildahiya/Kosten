@@ -18,4 +18,7 @@ public class MoneyContract {
         public final static String COLUMN_AMOUNT_BORROWED ="Borrowed_Amount";
         public final static String COLUMN_AMOUNT_GIVEN ="Amount_Lend";
     }
+
+
 }
+
